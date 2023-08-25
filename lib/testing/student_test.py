@@ -1,49 +1,28 @@
-#!/usr/bin/env python3
-
-from student import Student, ChattyStudent
-
-import io
-import sys
+from student import Student
+from chatty_student import ChattyStudent
 
 class TestStudent:
-    '''Class Student in student.py'''
-    
-    def test_says_hello(self):
-        '''says a brief greeting.'''
-        captured_out = io.StringIO()
-        sys.stdout = captured_out
-        student = Student()
-        student.hello()
-        sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "Hey there! I'm so excited to learn stuff.\n")
+    def test_hello_method(self):
+        student = Student("John", "Doe")
+        assert student.hello() == "Hey there! I'm so excited to learn stuff."
 
-    def test_raises_hand(self):
-        '''respectfully tries to get the teacher's attention.'''
-        captured_out = io.StringIO()
-        sys.stdout = captured_out
-        student = Student()
-        student.raise_hand()
-        sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "Pick me!\n")
+    def test_raise_hand_method(self):
+        student = Student("John", "Doe")
+        assert student.raise_hand() == "Pick me!"
 
 class TestChattyStudent:
-    '''Class ChattyStudent in student.py'''
-    
-    def test_says_hello(self):
-        '''says a brief greeting, then tries to spoil a TV show.'''
-        captured_out = io.StringIO()
-        sys.stdout = captured_out
-        chatty_student = ChattyStudent()
-        chatty_student.hello()
-        sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "Hey there! I'm so excited to learn stuff.\n" +
-            "How are you doing today? I'm okay, but I'm kind of tired. Did you watch The Walking Dead last night? You didn't?! Oh man, it was so crazy! What, you don't want any spoilers? Okay well let me just tell you who died...\n")
+    def test_hello_method(self):
+        chatty_student = ChattyStudent("Jane", "Smith")
+        expected_result = (
+            "Hey there! I'm so excited to learn stuff. "
+            "How are you doing today? I'm okay, but I'm kind of tired. "
+            "Did you watch The Walking Dead last night? You didn't?! "
+            "Oh man, it was so crazy! What, you don't want any spoilers? "
+            "Okay well let me just tell you who died..."
+        )
+        assert chatty_student.hello() == expected_result
 
-    def test_raises_hand(self):
-        '''respectfully tries to get the teacher's attention ten times.'''
-        captured_out = io.StringIO()
-        sys.stdout = captured_out
-        chatty_student = ChattyStudent()
-        chatty_student.raise_hand()
-        sys.stdout = sys.__stdout__
-        assert(captured_out.getvalue() == "Pick me!\nPick me!\nPick me!\nPick me!\nPick me!\nPick me!\nPick me!\nPick me!\nPick me!\nPick me!\n")
+    def test_raise_hand_method(self):
+        chatty_student = ChattyStudent("Jane", "Smith")
+        expected_result = "Pick me!" * 10
+        assert chatty_student.raise_hand() == expected_result
